@@ -8,6 +8,10 @@
     $pays = $_POST['pays'];
     $conditions = $_POST['cdtgnr'];
     $action = $_POST['action'];
+    $today=date('Y-m-d');
+
+    mysqli_connect('ftp-lucassduval.alwaysdata.net', 'lucassduval', 'Loulou04100!');
+    mysqli_select_db('https://demo.phpmyadmin.net/master-config/index.php?route=/database/structure&db=amoi', 'user');
 
     $to = 'ryuk.duv@gmail.com';
     $from= 'ryuk.duv@gmail.com';
@@ -22,6 +26,17 @@
     $message = 'Voici vos identifiants d\'inscription :' . PHP_EOL
     .$message = 'Email : ' . $mail . PHP_EOL
     .$message = 'Mot de passe : ' . PHP_EOL . $mdp;
+
+    $query='INSERT INTO user(date,email...) VALUES (\''.$today.'\',\''.$mail.'\')';
+    if(!($dbResult=mysqli_query($dbLink, $query)))
+    {
+        echo'Erreurdansrequête<br/>';
+        //Afficheletyped'erreur.
+        echo'Erreur:'.mysqli_error($dbLink).'<br/>';
+        //Affichelarequêteenvoyée.
+        echo'Requête:'.$query.'<br/>';exit();
+    }
+
     if ($action == 'mailer')
     {
         if (isset($ident, $civilite, $mail, $mdp, $mdpverif, $telephone, $pays, $conditions, $action))
